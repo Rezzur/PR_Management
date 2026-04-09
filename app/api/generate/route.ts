@@ -40,9 +40,8 @@ export async function POST(req: Request) {
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY ?? "");
   let resultString = "";
   try {
-    const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash" 
-    });
+    // Пробуем самую стабильную версию
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const generation = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
     });

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { PrMarkdown } from "@/components/pr-markdown";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { UserNav } from "@/components/user-nav";
 
 export default function HomePage() {
   const [brand, setBrand] = useState("");
@@ -28,6 +29,11 @@ export default function HomePage() {
           audience: audience.trim(),
         }),
       });
+
+      if (res.status === 401) {
+        setError("Требуется вход. Обновите страницу или войдите снова.");
+        return;
+      }
 
       const data = await res.json();
 
@@ -63,7 +69,10 @@ export default function HomePage() {
             <p className="text-sm text-slate-600 dark:text-slate-400">Идеи под бренд и инфоповод</p>
           </div>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-2 sm:gap-3">
+          <UserNav />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="relative z-10 mx-auto max-w-4xl px-4 pb-16 pt-8 sm:px-6">
